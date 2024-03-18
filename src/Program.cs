@@ -1,34 +1,68 @@
 ﻿using System;
 class TemperatureConverter
 {
-    public static string TempConvert(double temperature, string unit)
+
+    // function Convert Temperature
+    public static string ConvertTemperature(double temperature, string unit)
     {
-        if (unit == "F")
+        double newTemperature = 0;
+        string newUnit = "";
+        if (unit.ToUpper() == "C")
         {
-            double newTemp = (temperature - 32) * 5 / 9;
-            return $"converted:{newTemp} C";
-        }
-        else if (unit == "C")
-        {
-            double newTemp = temperature * 9 / 5 + 32;
-            return $"converted:{newTemp} F";
+            newTemperature = (temperature * 9 / 5) + 32;
+            newUnit = "F";
         }
         else
         {
-            return "Invalid unit";
+            newTemperature = (temperature - 32) * 5 / 9;
+            newUnit = "C";
         }
+        return $"Converted:{temperature} {unit} = {newTemperature:F2} {newUnit}";
+
     }
 
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
+        try
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter a temperature and its unit (C or F), or type 'Quit' to exit:");
+                string input = Console.ReadLine() ?? "";
 
-        // Console.WriteLine("Enter a temperature and its unit (C or F):");
-        // string input = Console.ReadLine() ?? "";
+                if (input.ToLower() == "quit")
+                {
+                    Console.WriteLine("Program terminated.");
+                    break;
+                }
 
-        Console.WriteLine(TempConvert(32, "F")); // Output: 0 C 
-        Console.WriteLine(TempConvert(100, "C")); // Output: 212 F }
+                string[] inputs = input.Split(' ');
+                if (inputs.Length != 2)
+                {
+                    Console.WriteLine("Invalid input. Please enter a numeric temperature.");
+                    continue;
+                }
+
+                if (!double.TryParse(inputs[0], out double temperature))
+                {
+                    Console.WriteLine("Invalid input. Please enter a numeric temperature.");
+                    continue;
+                }
+
+                string unit = inputs[1].ToUpper();
+                if (unit != "C" && unit != "F")
+                {
+                    Console.WriteLine("Invalid scale. Please enter 'C' for Celsius or 'F' for Fahrenheit.");
+                    continue;
+                }
+
+                Console.WriteLine(ConvertTemperature(temperature, unit));
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        Console.ReadKey();
     }
-
 }
-
-
