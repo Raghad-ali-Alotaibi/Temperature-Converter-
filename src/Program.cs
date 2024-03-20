@@ -18,7 +18,6 @@ class TemperatureConverter
             newUnit = "C";
         }
         return $"Converted:{temperature} {unit} = {newTemperature:F2} {newUnit}";
-
     }
 
     public static void Main(string[] args)
@@ -61,7 +60,7 @@ class TemperatureConverter
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine("The Exception : " + e.Message);
         }
         Console.ReadKey();
     }
